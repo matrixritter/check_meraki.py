@@ -1,6 +1,6 @@
 # check_meraki.py
 
-Meraki checkcommand script for classical monitoring systems like Nagios
+Checkcommand script for Meraki devices to be used in monitoring systems like Nagios
 
 ## Use Case Description
 
@@ -13,15 +13,23 @@ This script currently uses the following modules:
 * requests
 * requests_cache
 * argparse
-* json
-* time
+* json (default)
+* time (default)
 * sys (default)
 
 Please check your local environment if this modules are globally available. As your monitoring process typically has it's own user and you can't switch to any virtual python environment without having some wrapper scripts, it's best to have them globally available. As this script is not using any bleeding edge features, any version should work.
 
-To install this, just copy check_meraki.py to any directory which your monitoring system can access and allow execution:
+To install this script, just copy check_meraki.py to any directory which your monitoring system can access and allow execution:
 
 `chmod +x ./check_meraki.py`
+
+For testing purposes I would recommend to setup a python venv and install all required modules there:
+
+```
+python -m venv check_meraki
+source check_meraki/bin/activate
+pip install -r requirements.txt
+```
 
 ## Usage
 
@@ -44,7 +52,7 @@ optional arguments:
   --cache-path CACHE_PATH  Path to the sqlite DB used for caching
 ```
 
-The API Key is generated on Merakis dashboard, but the Org ID needs to be retrieved with a HTTP client like curl:
+The API Key is generated on Merakis dashboard, please follow the steps described here: [Cisco Meraki Dashboard](https://documentation.meraki.com/General_Administration/Other_Topics/The_Cisco_Meraki_Dashboard_API). The Org ID needs to be retrieved with a HTTP client like curl:
 
 ```
 curl https://api.meraki.com/api/v0/organizations -L -H 'X-Cisco-Meraki-API-Key: <Your key>'
@@ -65,7 +73,7 @@ python ./check_meraki.py --serial <Device serial> --api-key <Your key> --org <Or
 
 ## Known issues
 
-Script is currently accepting all arguments via CLI and don't read from any configuration file yet.
+Script is currently accepting all arguments via CLI and don't read from any configuration file yet. Also it's currently the v0 API.
 
 ## Getting help
 
